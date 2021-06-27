@@ -1,0 +1,74 @@
+{% extends"Base.html" %}
+
+{% block style %}
+body{
+background-color:#F08080;
+color:black
+}
+{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-top:20px; margin-left:20px">
+   <div class="col-8">
+      <h1 style="margin-left:200px; font-weight:bold">THESE ARE ALL ITEMS WE HAVE FOR YOU</h1>
+      <h3 style="margin-left:280px">Click On Green Button To Purchase The Item </h3>
+      <br>
+      <table class="table table-hover table-dark">
+         <thead>
+            <tr>
+               <!-- Your Columns HERE -->
+               <th scope="col">ID</th>
+               <th scope="col">NAME</th>
+               <th scope="col">BARCODE</th>
+               <th scope="col">PRICE</th>
+               <th scope="col">OPTIONS</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for item in items %}
+            {% include 'includes/Items_Modals.html' %}
+            <!-- Your rows inside the table HERE: -->
+            <tr>
+               <td style="font-weight:bold">{{ item.id }}</td>
+               <td style="font-weight:bold">{{ item.name }}</td>
+               <td style="font-weight:bold">{{ item.barcode }}</td>
+               <td style="font-weight:bold">₹ {{ item.price }}</td>
+               <td>
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.id }}">More Info</button>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm-{{ item.id }}">Purchase</button>
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+    <div class="col-4">
+        <h2 style="font-weight:bold">Purchased Items</h2>
+        <p>Click On Return Item To Return Item</p>
+        <br>
+        <div class="row">
+           {% for purchased_item in purchased_items %}
+            {% include 'includes/Purchased_Items_Modals.html' %}
+             <div class="col-md-6">
+                 <div style="margin-bottom: 5px" class="card text-center bg-secondary">
+                      <div class="card-body">
+                          <h5 class="card-title" style="font-weight:bold">{{ purchased_item.name }}</h5>
+                          <button type="button" class="btn btn-danger" style="margin-bottom: 5px"
+                                  data-toggle="modal" data-target="#Modal-ReturnConfirm-{{ purchased_item.id }}">
+                              Return this Item
+                          </button>
+                          <p class="card-text"><strong>
+                              This item costs ₹{{ purchased_item.price }}
+                          </strong></p>
+                      </div>
+                  </div>
+             </div>
+           {% endfor %}
+        </div>
+   </div>
+</div>
+{% endblock %}
+
+{% block title %}
+MARKET PAGE
+{% endblock %}
