@@ -40,7 +40,7 @@ def market_page():
                 flash(f"Sorry You Don't Have {s_item_object.name} To Return", category="danger")
         return redirect(url_for('market_page'))
     if request.method == "GET":
-        items = Item.query.all()
+        items = Item.query.filter_by(owner=None)
         purchased_items = Item.query.filter_by(owner=current_user.id)
         return render_template("Market.html", items=items, purchase_form=purchase_form, purchased_items=purchased_items,
                                return_form=return_form)
